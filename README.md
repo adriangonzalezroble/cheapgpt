@@ -1,6 +1,6 @@
 # cheapGPT
 
-![tests](https://github.com/OWNER/REPO/actions/workflows/tests.yml/badge.svg)
+![tests](https://github.com/adriangonzalezroble/cheapgpt/actions/workflows/tests.yml/badge.svg)
 
 ## 1. Qué es cheapGPT
 cheapGPT es el chat de servicio al cliente más barato del mercado: usa un LLM gratuito,
