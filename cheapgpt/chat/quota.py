@@ -6,6 +6,9 @@ from datetime import datetime
 from typing import Callable
 
 PLANS = ("gratis", "barato", "premium_economico")
+FREE_DAILY_LIMIT = 4
+STUDENT_DAILY_LIMIT = 10
+CHEAP_DAILY_LIMIT = 50
 
 
 # El usuario ya usó todos los mensajes de su plan por hoy.
@@ -36,11 +39,11 @@ class MessageQuota:
         return self._remaining(plan, is_student, used + 1)
 
     def _limit_reached(self, plan: str, is_student: bool, used: int) -> bool:
-        return (plan == "gratis" and not is_student and used >= 4) or (plan == "gratis" and is_student and used >= 10) or (plan == "barato" and used >= 50)
+        return (plan == "gratis" and not is_student and used >= FREE_DAILY_LIMIT) or (plan == "gratis" and is_student and used >= STUDENT_DAILY_LIMIT) or (plan == "barato" and used >= CHEAP_DAILY_LIMIT)
 
     def _remaining(self, plan: str, is_student: bool, used: int) -> int | None:
         if plan == "premium_economico":
             return None
         if plan == "gratis":
-            return (10 if is_student else 4) - used
-        return 50 - used
+            return (STUDENT_DAILY_LIMIT if is_student else FREE_DAILY_LIMIT) - used
+        return CHEAP_DAILY_LIMIT - used
