@@ -36,7 +36,10 @@ class MessageQuota:
         return self._remaining(plan, is_student, used + 1)
 
     def _limit_reached(self, plan: str, is_student: bool, used: int) -> bool:
-        return (plan == "gratis" and not is_student and used >= 4) or (plan == "gratis" and is_student and used >= 10) or (plan == "barato" and used >= 50)
+        free_limit = 10 if is_student else 4
+        free_plan_exhausted = plan == "gratis" and used >= free_limit
+        cheap_plan_exhausted = plan == "barato" and used >= 50
+        return free_plan_exhausted or cheap_plan_exhausted
 
     def _remaining(self, plan: str, is_student: bool, used: int) -> int | None:
         if plan == "premium_economico":
